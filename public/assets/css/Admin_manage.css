@@ -1,0 +1,180 @@
+/* General Styles */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+/* Background Image */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Main Content */
+.main-content {
+    width: 95%;
+    max-width: 1000px; /* Prevents excessive width */
+    margin: 20px 30px 10px 70px;
+    padding: 20px;
+    background: rgb(91, 4, 4);
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px 10px rgba(127, 3, 3, 0.1);
+}
+
+/* Heading */
+h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+/* Users Table */
+.user-table {
+    display: block;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(15, 14, 14, 0.1);
+    margin-top: 20px;
+    overflow-x: auto; /* Enables horizontal scrolling on small screens */
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    min-width: 600px; /* Ensures proper layout on small screens */
+}
+
+thead {
+    background-color: #8a0808;
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    font-weight: bold;
+}
+
+/* Status Buttons */
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+    transition: 0.3s ease;
+}
+
+.approve {
+    background-color: #28a745;
+    color: white;
+}
+
+.approve:hover {
+    background-color: #218838;
+}
+
+.decline {
+    background-color: #dc3545;
+    color: white;
+}
+
+.decline:hover {
+    background-color: #c82333;
+}
+
+/* 🌍 FULLY RESPONSIVE DESIGN */
+@media screen and (max-width: 1024px) {
+    .main-content {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    table {
+        font-size: 12px;
+        min-width: 100%;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    /* Ensure tables don't break on small screens */
+    .user-table {
+        padding: 15px;
+        overflow-x: auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-content {
+        width: 95%;
+        margin-top: 50px;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .user-table {
+        padding: 10px;
+        overflow-x: auto;
+    }
+
+    table {
+        font-size: 10px;
+        min-width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    button {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+}
+
+/* Stack items vertically on mobile */
+@media screen and (max-width: 768px) {
+    .row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

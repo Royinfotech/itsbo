@@ -1,0 +1,340 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('../pictures/LoginBackg.png') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+/* Loader Overlay */
+.loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Logo in center */
+.logo-shadow {
+    width: 90px;
+    height: 90px;
+    border-radius: 48%;
+    object-fit: cover;
+    position: absolute;
+    z-index: 2;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Spinner container */
+.dot-spinner-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dot Spinner Main */
+.dot-spinner {
+    --uib-size: 140px;
+    --uib-speed: 0.9s;
+    --uib-color: #440505;
+    position: relative;
+    height: var(--uib-size);
+    width: var(--uib-size);
+}
+
+/* Each Dot */
+.dot-spinner__dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.dot-spinner__dot::before {
+    content: '';
+    height: 14%;
+    width: 14%;
+    border-radius: 50%;
+    background-color: var(--uib-color);
+    transform: scale(0);
+    opacity: 0.5;
+    animation: pulseDot calc(var(--uib-speed) * 1.111) ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 12 Dots - evenly spaced at 30deg intervals */
+.dot-spinner__dot:nth-child(1) { transform: rotate(0deg); }
+.dot-spinner__dot:nth-child(2) { transform: rotate(30deg); }
+.dot-spinner__dot:nth-child(3) { transform: rotate(60deg); }
+.dot-spinner__dot:nth-child(4) { transform: rotate(90deg); }
+.dot-spinner__dot:nth-child(5) { transform: rotate(120deg); }
+.dot-spinner__dot:nth-child(6) { transform: rotate(150deg); }
+.dot-spinner__dot:nth-child(7) { transform: rotate(180deg); }
+.dot-spinner__dot:nth-child(8) { transform: rotate(210deg); }
+.dot-spinner__dot:nth-child(9) { transform: rotate(240deg); }
+.dot-spinner__dot:nth-child(10) { transform: rotate(270deg); }
+.dot-spinner__dot:nth-child(11) { transform: rotate(300deg); }
+.dot-spinner__dot:nth-child(12) { transform: rotate(330deg); }
+
+/* Delayed animations for ripple effect */
+.dot-spinner__dot:nth-child(1)::before { animation-delay: calc(var(--uib-speed) * -0.916); }
+.dot-spinner__dot:nth-child(2)::before { animation-delay: calc(var(--uib-speed) * -0.833); }
+.dot-spinner__dot:nth-child(3)::before { animation-delay: calc(var(--uib-speed) * -0.75); }
+.dot-spinner__dot:nth-child(4)::before { animation-delay: calc(var(--uib-speed) * -0.666); }
+.dot-spinner__dot:nth-child(5)::before { animation-delay: calc(var(--uib-speed) * -0.583); }
+.dot-spinner__dot:nth-child(6)::before { animation-delay: calc(var(--uib-speed) * -0.5); }
+.dot-spinner__dot:nth-child(7)::before { animation-delay: calc(var(--uib-speed) * -0.416); }
+.dot-spinner__dot:nth-child(8)::before { animation-delay: calc(var(--uib-speed) * -0.333); }
+.dot-spinner__dot:nth-child(9)::before { animation-delay: calc(var(--uib-speed) * -0.25); }
+.dot-spinner__dot:nth-child(10)::before { animation-delay: calc(var(--uib-speed) * -0.166); }
+.dot-spinner__dot:nth-child(11)::before { animation-delay: calc(var(--uib-speed) * -0.083); }
+.dot-spinner__dot:nth-child(12)::before { animation-delay: 0s; }
+
+/* Animation */
+@keyframes pulseDot {
+    0%, 100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* Main Container */
+.main-container {
+    width: 600px;
+    max-width: 90%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* reCAPTCHA Styling */
+.g-recaptcha {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+}
+
+.g-recaptcha iframe {
+    transform: scale(0.8);
+    transform-origin: center;
+}
+
+/* Flexbox for logo and login */
+.login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Logo Side */
+.logo-side {
+    background: linear-gradient(120deg, #800000, #660000);
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+/* Logo Image */
+.logo img {
+    width: 120px;
+    height: auto;
+    border-radius: 50%;
+}
+
+/* Login Side */
+.login-side {
+    width: 50%;
+    padding: 30px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Login Content */
+.login-content {
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+}
+
+/* ITSBO Text */
+.itsbo {
+    color: #1b1a1a;
+    font-weight: 900;
+    font-size: 28px;
+}
+
+/* Gateway Text */
+.gateway {
+    color: #800000;
+    font-weight: 700;
+    font-family: 'Great Vibes', cursive;
+    font-size: 38px;
+}
+
+/* Form Labels */
+.form-label {
+    font-size: 13px;
+    color: #555;
+    font-weight: 500;
+    text-align: left;
+    display: block;
+}
+
+/* Form Inputs */
+.form-control {
+    padding: 10px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 14px;
+    background: #f8f8f8;
+}
+
+.form-control:focus {
+    border-color: #800000;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
+}
+
+/* Login Button */
+.btn-login {
+    width: 100%;
+    background: linear-gradient(135deg, #800000, #660000);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Error Messages */
+.error-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.forgot-password-link {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.forgot-password-link:hover {
+    color: #a71d2a;
+    text-decoration: underline;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        width: 90%;
+    }
+
+    .login-wrapper {
+        flex-direction: column;
+    }
+
+    .logo-side, .login-side {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    .itsbo {
+        font-size: 22px;
+    }
+
+    .gateway {
+        font-size: 30px;
+    }
+    
+    .btn-login {
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    .form-control {
+        font-size: 13px;
+    }
+
+    /* Adjust reCAPTCHA */
+    .g-recaptcha iframe {
+        transform: scale(0.9);
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .logo img {
+        width: 80px;
+    }
+
+    .login-side {
+        padding: 15px;
+    }
+
+    .itsbo {
+        font-size: 20px;
+    }
+
+    .gateway {
+        font-size: 26px;
+    }
+
+    .btn-login {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+    /* Adjust reCAPTCHA for small screens */
+    .g-recaptcha iframe {
+        transform: scale(0.85);
+    }
+}

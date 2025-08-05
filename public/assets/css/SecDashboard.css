@@ -1,0 +1,300 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Background Image */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    width: 90%;
+    max-width: 1000px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 70px; 
+    margin-right: 50px;
+    transition: margin-left 0.5s ease-in-out;  
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Dashboard Card */
+.dashboard-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1 1 30%;
+    min-width: 250px;
+    max-width: 500px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-top: 5px solid maroon;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(128, 0, 0, 0.3);
+}
+
+.dashboard-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, maroon, #ff4444);
+}
+
+/* Stats Container */
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Counter Value */
+.counter-value {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#studentCount, #fileCount {
+    font-size: 3em;
+    font-weight: bold;
+    color: maroon;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.counter-label {
+    font-size: 1.2em;
+    color: #666;
+    display: block;
+}
+
+/* Chart Container */
+.chart-container {
+    width: 100%;
+    height: 250px;
+    margin-top: 10px;
+}
+
+/* Animation */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.counter-value.highlight {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* File Counter */
+.file-counter {
+    position: absolute;
+    top: 28%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 9vw;
+    font-weight: bold;
+    color: maroon;
+}
+
+.file-counter:hover {
+    color: darkred;
+}
+
+/* Calendar of Activities */
+.calendar-card {
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+    background: white;
+    padding: 2vw;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    border-top: 5px solid maroon;
+}
+
+.calendar-card:hover {
+    box-shadow: 0 6px 15px rgba(128, 0, 0, 0.3);
+}
+
+/* Table Styling */
+.event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-table th, .event-table td {
+    border: 1px solid #ddd;
+    padding: 1vw;
+    text-align: left;
+}
+
+.event-table th {
+    background: maroon;
+    color: white;
+    font-size: 1.4vw;
+    text-align: center;
+}
+
+.event-table td {
+    font-size: 1vw;
+}
+
+.event-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Maroon Header Styling */
+h3 {
+    color: maroon;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 2vw;
+}
+
+/* Button Styling */
+button {
+    background: maroon;
+    color: white;
+    border: none;
+    padding: 1vw 2vw;
+    font-size: 1vw;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+    background: darkred;
+}
+
+/* Responsive Design (Tablet) */
+@media (max-width: 1024px) {
+    .dashboard-container {
+        margin-left: 0; /* Centering the layout */
+        width: 95%;
+        padding: 30px;
+    }
+    .dashboard-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    .dashboard-card {
+        width: 90%;
+        max-width: 400px;
+    }
+    .calendar-card {
+        width: 90%;
+    }
+}
+
+/* Responsive Design (Smaller Tablets & Large Phones) */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 20px;
+    }
+    .dashboard-card {
+        width: 100%;
+        max-width: 350px;
+    }
+    .calendar-card {
+        width: 100%;
+    }
+    .event-table th, .event-table td {
+        padding: 2vw;
+        font-size: 12px;
+    }
+    .progress-container {
+        width: 12vw;
+        height: 12vw;
+    }
+    .chart-container {
+        height: 200px;
+    }
+    #studentCount, #fileCount {
+        font-size: 2.5em;
+    }
+    .counter-label {
+        font-size: 1em;
+    }
+    .file-counter {
+        font-size: 8vw;
+    }
+}
+
+/* Responsive Design (Mobile) */
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 20px;
+    }
+    .dashboard-card {
+        width: 80%;
+        padding: 5vw;
+    }
+    .progress-container {
+        width: 18vw;
+        height: 18vw;
+    }
+    .chart-container {
+        height: 180px;
+    }
+    #studentCount, #fileCount {
+        font-size: 2em;
+    }
+    .file-counter {
+        font-size: 9vw;
+    }
+    .event-table th, .event-table td {
+        padding: 3vw;
+        font-size: 12px;
+    }
+    button {
+        padding: 3vw 5vw;
+        font-size: 1rem;
+    }
+}

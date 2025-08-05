@@ -1,0 +1,826 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 75vh;
+    overflow-x: hidden;
+    padding: 0px;
+}
+
+/* Background Image */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Main Container */
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px; /* Adjusted spacing */
+    max-height: none;
+    overflow: visible;
+    transition: 0.3s ease-in-out;
+    border-top: 5px solid maroon;
+}
+
+/* Header */
+.header {
+    background-color: #6d1b1b;
+    color: white;
+    padding: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+/* Add this to your Attendance.css file */
+.attendanceCheckbox:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+}
+
+.attendanceCheckbox:not(:disabled) {
+    cursor: pointer;
+}
+
+/* Event Selection */
+.event-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+/* Form group styles */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Print button specific styles */
+.btn-print {
+    background-color: #6d1b1b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: auto;
+    margin-top: 15px;
+}
+
+.btn-print:hover {
+    background-color: #8b2323;
+}
+
+/* Modal header styles */
+.modal-content h2 {
+    color: #6d1b1b;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#eventTitle, #event {
+    font-size: 14px;
+    padding: 5px;
+    border: 2px solid #6d1b1b;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fff;
+    margin-top: 5px;
+}
+
+/* Attendance Table */
+.attendance-table {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.attendance-table h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    font-size: 16px;
+}
+
+th {
+    background-color: #6d1b1b;
+    color: white;
+}
+
+/* Attendance Checkboxes */
+.attendanceCheckbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Buttons Container */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+/* Button Styles */
+button {
+    width: 180px;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #6d1b1b;
+    color: white;
+    transition: 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Button Hover Effects */
+button:hover {
+    background-color: #8b2323;
+    transform: scale(1.05);
+}
+
+/* Disabled Button */
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Attendance Logs */
+.attendance-logs {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.attendance-logs h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) { /* For Tablets */
+    .container {
+        width: 90%;
+        max-width: 700px;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) { /* For Mobile Phones */
+    body {
+        align-items: center;
+        padding: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 400px;
+        padding: 20px;
+    }
+
+    .header {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .event-selection select {
+        font-size: 14px;
+        width: 100%;
+        padding: 6px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 6px;
+    }
+}
+
+@media (max-width: 480px) { /* For Smaller Phones */
+    .container {
+        width: 100%;
+        max-width: 360px;
+        padding: 15px;
+    }
+
+    .event-selection select {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    table th, table td {
+        font-size: 13px;
+        padding: 5px;
+    }
+}
+
+/* Add these styles to your existing CSS */
+.present {
+    background-color: rgba(75, 181, 67, 0.1) !important;
+}
+
+.absent {
+    background-color: rgba(181, 67, 67, 0.1) !important;
+}
+
+.attendanceCheckbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.attendanceCheckbox:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#saveAttendance {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+#saveAttendance:hover {
+    background-color: #45a049;
+}
+
+/* Add to your existing CSS */
+.save-status {
+    padding: 5px 10px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    animation: fadeOut 2s forwards;
+    z-index: 1000;
+}
+
+.save-status.success {
+    background-color: #4CAF50;
+}
+
+.save-status.error {
+    background-color: #f44336;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Add to your existing CSS */
+.status-indicator {
+    position: absolute;
+    right: 10px;
+    padding: 5px;
+    border-radius: 50%;
+    animation: fadeOut 2s forwards;
+}
+
+.status-indicator.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.status-indicator.error {
+    background-color: #f44336;
+    color: white;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.present {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.absent {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.attendanceCheckbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.attendanceCheckbox:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+tr {
+    position: relative;
+}
+
+/* Add to your existing CSS */
+#submitAttendance {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#submitAttendance:hover {
+    background-color: #45a049;
+}
+
+tr.present {
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+tr.absent {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+/* Add/update these styles */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#submitAttendance {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#submitAttendance:hover {
+    background-color: #45a049;
+}
+
+#submitAttendance:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh; /* Maximum height of 80% of viewport height */
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-top: 5px solid maroon;
+    animation: modalFadeIn 0.3s ease-out;
+    overflow-y: auto; /* Make modal scrollable */
+    margin: 50px auto; /* Center the modal */
+}
+
+/* Responsive styles for tablets */
+@media (max-width: 1024px) {
+    .modal-content {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        padding: 20px;
+    }
+}
+
+/* Responsive styles for smaller tablets */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 80%;
+        margin: 80px auto;
+        padding: 10px;
+    }
+
+    .close {
+        font-size: 24px;
+        right: 12px;
+        top: 8px;
+    }
+}
+
+/* Responsive styles for mobile phones */
+@media (max-width: 480px) {
+    .modal-content {
+        max-width: 90%;
+        margin: 60px auto;
+        padding: 6px;
+        border-radius: 10px;
+    }
+
+    .close {
+        font-size: 22px;
+        right: 10px;
+        top: 6px;
+    }
+
+    .modal-content h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-control {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .btn-print {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close, .close-logs {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 1;
+}
+
+.close:hover, .close-logs:hover {
+    color: #6d1b1b;
+}
+
+/* Ensure modal is hidden by default */
+.modal {
+    display: none;
+}
+
+/* When modal is shown */
+.modal.show {
+    display: flex;
+}
+
+/* Logs Modal specific styles */
+.logs-table-container {
+    margin-top: 20px;
+    overflow-x: auto; /* Allow horizontal scroll if needed */
+}
+
+#logsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#logsTable th, 
+#logsTable td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+#logsTable th {
+    background-color: #6d1b1b;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+#logsTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#logsTable tr:hover {
+    background-color: #f5f5f5;
+}
+
+.status-present {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.status-absent {
+    color: #f44336;
+    font-weight: bold;
+}
+
+/* Add pagination styles */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-button {
+    padding: 8px 16px;
+    background-color: #6d1b1b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #8b2323;
+}
+
+.pagination-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #333;
+    margin: 0 10px;
+}
+
+/* Responsive styles for pagination */
+@media (max-width: 768px) {
+    .pagination-container {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .pagination-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .pagination-info {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination-container {
+        padding: 5px;
+    }
+
+    .pagination-button {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .pagination-info {
+        font-size: 12px;
+    }
+}
+
+.action-log {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    margin-top: 2px;
+}
+
+.action-log:not(:last-child) {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+}
+
+.action-logs-container {
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.action-log {
+    background-color: #f8f9fa;
+    border-left: 3px solid #6d1b1b;
+    padding: 8px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.action-type {
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.action-details {
+    color: #666;
+    line-height: 1.4;
+}
+
+.checked {
+    color: #4CAF50;
+}
+
+.unchecked {
+    color: #f44336;
+}
+
+/* Scrollbar styling */
+.action-logs-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.action-logs-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.action-logs-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.action-logs-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Search Container Styles */
+.search-container {
+    margin: 20px 0;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid #6d1b1b;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-box input:focus {
+    border-color: #8b2323;
+}
+
+.search-box button {
+    padding: 10px 20px;
+    background-color: #6d1b1b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-box button:hover {
+    background-color: #8b2323;
+}
+
+.search-box i {
+    font-size: 16px;
+}
+
+/* Responsive styles for search */
+@media (max-width: 768px) {
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .search-box input {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+    
+    .search-box button {
+        padding: 8px 15px;
+    }
+}

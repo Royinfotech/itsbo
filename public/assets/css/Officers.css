@@ -1,0 +1,262 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 5px 0 0 0; /* Removed left padding, kept top padding */
+    background: #f4f4f4;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Background Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    margin-left: 100px; /* Space for sidebar */
+    padding: 50px 50px;
+    width: calc(100% - 250px); /* Adjust width to account for sidebar */
+}
+
+/* Wrapper to center content */
+.container-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Officer Registration - Positioned on Top */
+.container {
+    width: 100%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid maroon;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+/* Officer Records - Positioned Below */
+.container.officer-record {
+    width: 100%;
+}
+
+/* Headings */
+h2 {
+    background-color: #6d1b1b;
+    color: white;
+    padding: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 2px;
+    margin-left: 5px;
+    color: #333;
+}
+
+/* Input & Select Fields */
+input {
+    width: 98%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+select {
+    padding: 13px;
+    margin: 15px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    width: 97.2%;
+}   
+
+input:focus, select:focus {
+    outline: none;
+    border-color: maroon;
+    box-shadow: 0 0 5px rgba(128, 0, 0, 0.2);
+}
+
+
+/* File Input */
+input[type="file"] {
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* Button Styling */
+button {
+    width: 68%;
+    padding: 10px;
+    background: maroon;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+}
+
+button:hover {
+    background: darkred;
+}
+
+/* Modal Button Styling */
+.modal-footer button {
+    width: auto;
+    margin: 0 5px;
+    padding: 8px 20px;
+    border-radius: 10px;
+}
+
+.modal-footer button.btn-secondary {
+    background: #6c757d;
+}
+
+.modal-footer button.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+}
+
+th {
+    background: maroon;
+    color: white;
+}
+
+/* Image Styling */
+td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px; 
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+}
+
+.modal-header {
+    background: maroon;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    padding: 15px 20px;
+}
+
+.modal-header .btn-close {
+    color: white;
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 15px 20px;
+}
+
+/* Form Group Styling */
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+/* Update Responsive Design */
+@media screen and (max-width: 1024px) {
+    .main-content {
+        margin-left: 250px;
+        padding: 20px;
+        width: calc(100% - 250px);
+    }
+
+    .container-wrapper {
+        width: 100%;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 750px;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 80px 0 0 0;
+    }
+
+    .main-content {
+        margin-left: 250px;
+        padding: 15px;
+        width: calc(100% - 250px);
+    }
+
+    .container {
+        width: 100%;
+        max-width: 450px;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-content {
+        margin-left: 250px;
+        padding: 10px;
+        width: calc(100% - 250px);
+    }
+
+    .container {
+        width: 100%;
+        max-width: 350px;
+        padding: 10px;
+    }
+}

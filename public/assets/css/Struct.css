@@ -1,0 +1,135 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Background Image */
+.org-chart::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Organizational Chart Container */
+.org-chart {
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    min-height: 100%;
+}
+
+/* Chart Structure */
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Position Container */
+.position {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #eef2f3, #d9e8f5);
+    opacity: 0.8;
+    padding: 0px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    width: 180px;
+    margin: 15px 6px;
+    transition: transform 0.5s ease;
+}
+
+.position:hover {
+    transform: translateY(-5px);
+}
+
+/* Images */
+.position img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 5px solid #8e060b;
+    margin-bottom: 1px;
+    margin-top: 5px;
+}
+
+/* Names & Titles */
+.name {
+    font-weight: 500;
+    color: #042546;
+    font-size: 10px;
+    margin-bottom: 1px;
+    text-align: center;
+}
+
+.title {
+    font-size: 10px;
+    color: #ffffff;
+    background-color: #740606;
+    padding: 8px 14px;
+    border-radius: 20px;
+    width: fit-content;
+    text-align: center;
+    font-weight: 200;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Row Layout */
+.row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 28px; /* Increased spacing for better readability */
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .row {
+        flex-direction: column;
+        gap: 25px; /* Adjust spacing for mobile */
+    }
+}
+
+/* Light Glow Effect */
+.position {
+    position: relative;
+    overflow: visible; /* Ensures glow is visible outside */
+}
+
+/* Glowing light moving along the border */
+.position::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 96%;
+    height: 96%;
+    border-radius: 15px;
+    border: 3px solid transparent; /* Transparent border initially */
+    box-shadow: 0 0 0px 0px rgba(0, 0, 0, 0.8); /* Glowing effect */
+    animation: followOutline 5s linear infinite;
+    z-index: -1;
+    pointer-events: none; /* Prevents interaction */
+}
+
+/* Glowing light moving around the outline */
+@keyframes followOutline {
+    0% { box-shadow: 0 -5px 10px 3px rgba(0, 0, 0, 0.8); }
+    25% { box-shadow: 5px 0 10px 3px rgba(0, 0, 0, 0.8) }
+    50% { box-shadow: 0 5px 10px 3px rgba(0, 0, 0, 0.8) }
+    75% { box-shadow: -5px 0 10px 3px rgba(0, 0, 0, 0.8)}
+    100% { box-shadow: 0 -5px 10px 3px rgba(0, 0, 0, 0.8) }
+}

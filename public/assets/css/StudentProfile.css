@@ -1,0 +1,163 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+/* Profile Container */
+.profile-container {
+    background: white;
+    width: 70%;
+    max-width: 70%;
+    min-height: 550px; /* Ensure enough space */
+    padding: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative center;
+    text-align: center;
+    border-top: 5px solid maroon;
+    overflow: hidden;
+}
+
+/* Profile Header */
+.profile-header {
+    font-size: 24px;
+    font-weight: bold;
+    color: maroon;
+    margin-bottom: 20px;
+}
+
+/* Profile Picture */
+.profile-pic-container {
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content */
+    justify-content: center;
+    text-align: center;
+}
+
+.profile-pic-container img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid maroon;
+}
+
+#takePhoto {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    background: maroon;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+#takePhoto:hover {
+    background: darkred;
+}
+
+/* Edit Button */
+.edit-btn-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    margin-right: 180px;
+}
+
+.edit-btn {
+    background: maroon;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.edit-btn:hover {
+    background: darkred;
+}
+
+/* Profile Information */
+.profile-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.info-row {
+    width: 48%;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.info-row label {
+    font-weight: bold;
+    display: block;
+    font-size: 16px;
+    color: maroon;
+}
+
+.info-row p, 
+.info-row input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid maroon;
+    font-size: 16px;
+    padding: 8px 0;
+    color: #333;
+    background: transparent;
+}
+
+.info-row input:disabled {
+    background: transparent;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Save Button */
+.save-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 12px 24px;
+    font-size: 16px;
+    background: maroon;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: none;
+}
+
+.save-btn:hover {
+    background: darkred;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .info-row {
+        width: 100%;
+    }
+}

@@ -1,0 +1,297 @@
+ /* Global Styles */
+ body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 145vh;
+   }
+   body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+   }
+   /* Modal Background */
+.modal {
+    display: none; /* Hide by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+    overflow: auto;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    margin: 1% auto; /* Center modal */
+    padding: 30px;
+    border-radius: 8px;
+    width: 40%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out; /* Fade-in effect */
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Button Styling */
+.button-container {
+    text-align: right;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+  .main-container {
+       background: rgba(255, 255, 255, 0.9);
+       padding: 30px;
+       border-radius: 10px;
+       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+       width: 100%;
+       max-width: 990px;
+       margin-left: 100px;
+       margin-right: 70px;
+       position: relative;
+       z-index: 1;
+       border-top: 5px solid maroon ;
+       margin-top: 10px;
+       transition: margin-right 0.5s ease-in-out;  
+   }
+
+   .form-grid {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+       gap: 15px;
+       width: 100%;
+   }
+
+   .form-group {
+       display: flex;
+       flex-direction: column;
+   }
+
+   label {
+       font-weight: bold;
+       color: #6d1b1b;
+   }
+
+   input, select {
+       padding: 8px;
+       border: 1px solid #6d1b1b;
+       border-radius: 5px;
+       transition: 0.3s;
+   }
+
+   input:focus, select:focus {
+       border-color: #710303;
+       box-shadow: 0 0 5px #710303;
+       outline: none;
+   }
+
+   .button-container {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       width: 100%;
+       margin-top: 15px;
+       grid-column: 1 / -1;
+   }
+
+   button {
+       padding: 10px 20px;
+       background-color: #6d1b1b;
+       color: white;
+       width: 35%;
+       font-size: 16px;
+       border: none;
+       border-radius: 10px;
+       cursor: pointer;
+       transition: 0.3s;
+       font-weight: bold;
+   }
+
+   button:hover {
+       background-color: #4d0d0d;
+   }
+
+   .records-container {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+}
+
+.records-container h2 {
+    margin-bottom: 20px;
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-box input,
+.search-box button {
+    font-size: 14px;
+}
+
+#studentTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#studentTable th, #studentTable td {
+    padding: 10px;
+    border: 1px solid #6d1b1b;
+    text-align: left;
+    white-space: nowrap;
+}
+
+#studentTable th {
+    background-color: #6d1b1b;
+    color: white;
+}
+
+   @media screen and (max-width: 768px) {
+      .main-container {
+          margin: auto;
+         width: 90%;
+         max-width: 500px;
+        }
+    }
+
+   @media screen and (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .main-container {
+        margin: auto;
+        width: 80%;
+        max-width: 300px;
+        padding: 5px;
+        
+    }
+    
+    /* Center input and select */
+    input {
+        width: 100%;
+        margin: 1px auto;
+        text-align: left;
+    }
+    
+    select {
+        width: 120%;
+        text-align: left;
+    }
+    
+    /* Adjust table wrapper */
+    .table-wrapper {
+        overflow-x: auto;
+        width: 100%;
+    }
+    
+    /* Table styles */
+    table {
+        font-size: 14px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 8px;
+        text-align: center;
+    }
+    
+    button {
+        width: 80%;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin: 10px auto;
+    }
+    
+   }

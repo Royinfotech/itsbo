@@ -1,0 +1,201 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 80px 20px;
+    min-height: 100vh;
+    display: fixed;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+/* Background Image */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: #ffffff;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-top: 5px solid maroon; /* Maroon Top Border */
+}
+
+/* Header */
+.card-header {
+    font-size: 22px;
+    font-weight: bold;
+    color: maroon;
+    margin-bottom: 15px;
+}
+
+/* Upload Button */
+.upload-btn {
+    padding: 12px 20px;
+    background: maroon;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+.upload-btn:hover {
+    background: #8b0000;
+    transform: scale(1.05);
+}
+
+/* File Upload Input */
+input[type="file"] {
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Recorded Files Section */
+.recorded-files {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.file-box {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Individual File Item */
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 8px;
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+}
+
+.file-item:hover {
+    transform: scale(1.02);
+    background-color: #f0f0f0;
+}
+
+/* File Preview (for images) */
+.file-preview {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* File Name */
+.file-item a {
+    text-decoration: none;
+    color: #007bff;
+    flex: 1;
+    padding-left: 10px;
+}
+
+.file-item a:hover {
+    text-decoration: underline;
+}
+
+/* Delete Button (Trash Icon) */
+.delete-btn {
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    color: red;
+    transition: transform 0.3s ease-in-out;
+}
+
+.delete-btn:hover {
+    transform: rotate(15deg) scale(1.2);
+}
+/* Responsive Design */
+@media (max-width: 950px) {
+    .container {
+        width: 80%;
+    }
+    
+    .file-item {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .file-preview {
+        width: 40px;
+        height: 40px;
+    }
+
+    .upload-btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+    
+    .file-item {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .file-preview {
+        width: 40px;
+        height: 40px;
+    }
+
+    .upload-btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+    }
+    .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .file-preview {
+        width: 30px;
+        height: 30px;
+    }
+
+    .upload-btn {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+}

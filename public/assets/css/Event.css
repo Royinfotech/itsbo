@@ -1,0 +1,284 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+/* Background Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
+/* Containers Styling */
+.container {
+    width: 90%;
+    max-width: 1000px; /* Prevents excessive width */
+    margin: 20px 50px 10px 50px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid maroon;
+}
+
+
+
+/* Headings */
+h2 {
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+/* Form Labels */
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    display: block;
+}
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 40px;
+}
+.form-divider {
+    border: none;
+    border-top: 2px solid #460404;
+    margin: 30px 0; /* adjust spacing above and below the line */
+}
+button {
+    width: 60%; 
+    padding: 12px;
+    background: maroon;
+    color: white; 
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+button:hover {
+    background: darkred;
+}
+/* Update Button */
+.updateBtn {
+    background: maroon; /* Base color */
+    display: none;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    max-width: 250px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.updateBtn:hover {
+    background: #007bff; /* Turns blue on hover */
+    transform: scale(1.05); /* Slightly enlarges the button on hover */
+}
+
+.updateBtn:active {
+    background: #0056b3; /* Darker blue when clicked */
+    transform: scale(0.98); /* Slightly shrinks when clicked */
+}
+
+
+
+/* Table Styling */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: #fff;
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap; /* Prevents shrinking */
+
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    font-size: 15px;
+    width: 100%;
+}
+
+th {
+    background: maroon;
+    color: white;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 15vw;
+    }
+    .container {
+        max-width: 88%;
+        padding: 20px;
+    }
+    input, button {
+        font-size: 12px;
+        width: 85%;
+    }
+    select {
+        width: 89%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 16vw;
+    }
+    .container {
+        max-width: 87%;
+        padding: 12px;
+    }
+    input {
+        width: 80%;
+        font-size: 11px;
+    }
+    select {
+        width: 90%;
+    }
+    button {
+        width: 80%;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Success & Error Messages */
+.message {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+/* Modal Background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-title {
+    color: #800000;
+    font-weight: bold;
+    margin: 0;
+    padding-right: 40px;
+}
+
+/* Overlay Background (Dimmed Area) */
+.overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+}
+
+/* Modal Close Button Styling */
+.close {
+    color: #e60e0e;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: rgb(134, 8, 8);
+}
+
+/* Modal Content Styling */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 10px;
+    border: 1px solid #888;
+    border-radius: 5px;
+}
+
+.modal-header {
+    position: relative;
+    padding: 10px;
+    border-bottom: 1px solid #800000;
+}
+.modal-title {
+    color: #800000;
+    font-weight: bold;
+    margin: 0;
+    align-items: center;
+    font-size: 25px;
+}
+
