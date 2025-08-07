@@ -24,8 +24,8 @@ body::before {
 
 /* Main Content */
 .main-content {
-    width: 95%;
-    max-width: 1000px; /* Prevents excessive width */
+    width: 100%;
+    max-width: 1130px; /* Prevents excessive width */
     margin: 20px 30px 10px 70px;
     padding: 20px;
     background: rgb(91, 4, 4);
@@ -102,72 +102,133 @@ button {
     background-color: #c82333;
 }
 
-/* 🌍 FULLY RESPONSIVE DESIGN */
+/* Tablet (max-width: 1024px) */
 @media screen and (max-width: 1024px) {
     .main-content {
-        width: 80%;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .main-content {
-        width: 90%;
-        padding: 15px;
-    }
-
-    h2 {
-        font-size: 24px;
-    }
-
-    table {
-        font-size: 12px;
-        min-width: 100%;
-    }
-
-    th, td {
-        padding: 10px;
-    }
-
-    button {
-        font-size: 12px;
-        padding: 6px 10px;
-    }
-
-    /* Ensure tables don't break on small screens */
-    .user-table {
-        padding: 15px;
-        overflow-x: auto;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .main-content {
         width: 95%;
-        margin-top: 50px;
+        margin: 10px auto;
         padding: 10px;
     }
-
-    h2 {
-        font-size: 20px;
-    }
-
     .user-table {
         padding: 10px;
-        overflow-x: auto;
     }
-
     table {
-        font-size: 10px;
+        font-size: 13px;
         min-width: 100%;
     }
-
     th, td {
         padding: 8px;
     }
+    .search-input {
+        width: 90vw;
+        max-width: 400px;
+    }
+    .year-level-sorting {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+}
 
-    button {
+/* Mobile (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .main-content {
+        width: 99%;
+        margin: 5px auto;
+        padding: 5px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    .user-table {
+        padding: 5px;
+        border-radius: 5px;
+    }
+    table {
+        font-size: 11px;
+        min-width: 100%;
+        margin-top: 5px;
+    }
+    th, td {
+        padding: 6px;
+    }
+    .search-input {
+        width: 95vw;
+        max-width: 300px;
+        font-size: 12px;
+        padding: 7px;
+    }
+    .year-level-sorting {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px;
+    }
+    .form-group label,
+    .form-group select {
+        font-size: 12px;
+    }
+    .add-user-btn,
+    .submit-btn,
+    .btn {
+        font-size: 12px;
+        padding: 7px 12px;
+    }
+    .modal-content {
+        width: 95vw !important;
+        min-width: unset;
+        padding: 10px;
+    }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    .main-content {
+        width: 100vw;
+        margin: 0;
+        padding: 2px;
+        border-radius: 0;
+    }
+    h2 {
+        font-size: 16px;
+    }
+    .user-table {
+        padding: 2px;
+        border-radius: 2px;
+    }
+    table {
+        font-size: 9px;
+        min-width: 100%;
+    }
+    th, td {
+        padding: 4px;
+    }
+    .search-input {
+        width: 98vw;
+        max-width: 220px;
+        font-size: 10px;
+        padding: 5px;
+    }
+    .year-level-sorting {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+        padding: 5px;
+    }
+    .form-group label,
+    .form-group select {
+        font-size: 10px;
+    }
+    .add-user-btn,
+    .submit-btn,
+    .btn {
         font-size: 10px;
         padding: 5px 8px;
+    }
+    .modal-content {
+        width: 99vw !important;
+        min-width: unset;
+        padding: 5px;
     }
 }
 

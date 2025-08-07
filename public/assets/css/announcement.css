@@ -1,155 +1,102 @@
+/* === Base Styles === */
 body {
-    margin-left: 120px;
-    margin-right: 50px;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Container */
+/* === Container === */
 .announcement-container {
-    max-width: 2500px;
-    width: 100%;
-    height: 100vh;
-    margin-top: 100px;
-    text-align: center;
-    padding: 10px;
-    border-radius: 8px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-top: 8px solid maroon;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    max-width: 1100px;
+    margin: 20px auto;
+    margin-left: 80px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-top: 6px solid maroon;
 }
 
-/* Title */
-.announcement-container h2 {
-    color: #800000;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 100;
-}
-
-/* Facebook Feed Container */
-.fb-feed-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 0px;
-    overflow-y: auto;
-    height: 680px;
-}
-
-/* Announcement Header */
+/* === Header Section === */
 .announcement-header {
-    padding: 20px;
-    border-bottom: 2px solid maroon;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
     margin-bottom: 20px;
 }
 
 .header-flex {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .announcement-header h2 {
     color: maroon;
-    font-size: 24px;
-    margin: 0;
-    white-space: nowrap;
+    font-size: 28px;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
+/* === Subtext Section === */
 .announcement-subtext {
-    text-align: right;
     color: #666;
-    font-size: 14px;
+    font-size: 15px;
+    text-align: right;
+    max-width: 400px;
 }
 
 .announcement-subtext p {
-    margin: 2px 0;
+    margin: 4px 0;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 1200px) {
-    body {
-        margin-left: 300px; /* Slightly smaller margin for medium screens */
-    }
-
-    .announcement-container {
-        max-width: 800px;
-    }
-
-    .fb-page {
-        width: 700px !important;
-    }
+/* === Facebook Feed === */
+.fb-feed-container {
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    height: 680px;
+    border-radius: 8px;
 }
 
+/* === Responsive Design === */
 @media screen and (max-width: 992px) {
-    body {
-        margin-left: 250px; /* Even smaller margin for smaller screens */
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .announcement-container {
-        max-width: 700px;
-    }
-
-    .fb-page {
-        width: 600px !important;
+    .announcement-subtext {
+        text-align: left;
+        margin-top: 10px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    body {
-        margin-left: 0; /* Remove margin when sidebar likely collapses */
-    }
-
     .announcement-container {
-        width: 95%;
-        margin: 10px auto;
-        height: calc(100vh - 20px);
+        margin: 20px;
+        padding: 20px;
     }
 
-    .fb-feed-container {
-        height: calc(100vh - 80px);
+    .announcement-header h2 {
+        font-size: 24px;
     }
 
     .fb-page {
         width: 100% !important;
     }
-
-    .header-flex {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .announcement-subtext {
-        text-align: left;
-    }
 }
 
-/* Handle very small screens */
 @media screen and (max-width: 480px) {
     .announcement-container {
-        margin: 5px;
-        width: calc(100% - 10px);
-        padding: 10px;
+        padding: 15px;
     }
 
-    .announcement-container h2 {
+    .announcement-header h2 {
         font-size: 20px;
-        margin-bottom: 15px;
     }
 
-    .fb-page {
-        min-width: 280px !important;
+    .announcement-subtext {
+        font-size: 13px;
     }
 }

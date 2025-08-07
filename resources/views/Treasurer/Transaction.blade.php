@@ -10,27 +10,29 @@
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            padding: 20px 0 0 0;
             text-align: center;
             position: relative;
             display: flex;
-            justify-content: center;
-            height: auto;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            padding-top: 10px;
         }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('./pictures/LoginBackg.png') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
-            opacity: 0.3;
-            z-index: -1;
-        }
+        /* Background Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../pictures/LoginBackg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.3;
+    z-index: -1;
+}
 
         .dashboard-container {
             width: 90%;

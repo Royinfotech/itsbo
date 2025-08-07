@@ -13,15 +13,13 @@
         }
         .qr-container {
             text-align: center;
-            padding: 30px;
-            max-width: 500px;
-            margin: 40px auto;
+            padding: 10px;
+            max-width: 800px;
+            max-height: 800px;
+            margin: 25px auto;
             background: white;
             border-radius: 12px;
-            border-left: #600000 10px solid;
-            border-right: #600000 2px solid;
-            border-top: #600000 1px solid;
-            border-bottom: #600000 5px solid;
+            border-top: #600000 8px solid;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .student-info {

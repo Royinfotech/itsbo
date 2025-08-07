@@ -10,7 +10,6 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f8f9fa;
         }
 
         .attendance-container {
@@ -19,7 +18,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin: 0 auto;
-            max-width: 1200px;
+            max-width: 1100px;
         }
 
         .attendance-container h2 {

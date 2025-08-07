@@ -16,8 +16,6 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            overflow: hidden;
         }
         
         body::before {
@@ -27,7 +25,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('../pictures/LoginBackg.png') no-repeat center center;
+            background: url('/assets/pictures/LoginBackg.png') no-repeat center center;
             background-size: cover;
             background-attachment: fixed;
             opacity: 0.3;
@@ -39,17 +37,20 @@
             padding: 5px;
             height: 100vh;
             overflow-y: auto;
+            position: relative;
         }
 
         .container {
             background: #ffffff;
             padding: 15px;
             border-radius: 20px;
-            max-width: 1300px;
+            max-width: 1100px;
+            max-height: 800px;
             box-shadow: 0 40px 40px rgba(0, 0, 0, 0.1);
-            height: calc(100vh - 20px);
             display: flex;
             flex-direction: column;
+            margin-left: 50px;
+            margin-top: 40px;
             overflow: hidden;
         }
 
@@ -366,77 +367,180 @@
             100% { transform: scale(1); }
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 1200px) {
+        /* Tablet (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            .main-content {
+                margin-left: 0;
+                padding: 10px;
+                height: auto;
+            }
+            .container {
+                margin-left: 0;
+                margin-top: 20px;
+                max-width: 98vw;
+                max-height: none;
+                padding: 10px;
+            }
             .main-controls-section {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 16px;
             }
-            
             .controls-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 15px;
+                gap: 10px;
             }
-            
             .right-camera {
+                margin-top: 16px;
                 justify-content: center;
-                margin-top: 20px;
+            }
+            .form-group {
+                height: auto;
+                padding: 12px;
+            }
+            .header h2 {
+                font-size: 22px;
+            }
+            .buttons-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            button {
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+            #reader {
+                max-width: 250px;
             }
         }
 
+        /* Mobile (max-width: 768px) */
         @media (max-width: 768px) {
             .main-content {
-                margin-left: 20px;
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 15px;
+                margin-left: 0;
+                padding: 5px;
                 height: auto;
-                min-height: 100vh;
             }
-            
-            .controls-grid {
+            .container {
+                margin-left: 0;
+                margin-top: 10px;
+                max-width: 99vw;
+                padding: 6px;
+                border-radius: 12px;
+            }
+            .main-controls-section {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .header h2 {
-                font-size: 24px;
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .buttons-section {
-                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
-            
-            button {
-                padding: 14px 16px;
-                font-size: 13px;
+            .controls-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
             }
-            
+            .form-group {
+                height: auto;
+                padding: 8px;
+            }
+            .header h2 {
+                font-size: 18px;
+                gap: 6px;
+            }
+            .header p {
+                font-size: 12px;
+            }
+            .buttons-section {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            button {
+                font-size: 12px;
+                padding: 8px 8px;
+            }
             #reader {
                 max-width: 280px;
             }
+            .qr-reader-container {
+                padding: 8px;
+                border-radius: 10px;
+            }
+            .result {
+                font-size: 12px;
+                padding: 8px;
+            }
         }
 
+        /* Small Mobile (max-width: 480px) */
         @media (max-width: 480px) {
             .main-content {
-                margin-left: 10px;
-                padding: 5px;
+                margin-left: 0;
+                padding: 2px;
+                height: auto;
             }
-            
+            .container {
+                margin-left: 0;
+                margin-top: 4px;
+                max-width: 100vw;
+                padding: 2px;
+                border-radius: 8px;
+            }
+            .form-group {
+                padding: 4px;
+                border-radius: 8px;
+            }
+            .header h2 {
+                font-size: 15px;
+                gap: 4px;
+            }
+            .header p {
+                font-size: 10px;
+            }
             .buttons-section {
                 grid-template-columns: 1fr;
-                gap: 8px;
+                gap: 4px;
+            }
+            button {
+                font-size: 11px;
+                padding: 6px 4px;
+                border-radius: 7px;
+            }
+            #reader {
+                max-width: 180px;
+            }
+            .qr-reader-container {
+                padding: 4px;
+                border-radius: 7px;
+            }
+            .result {
+                font-size: 10px;
+                padding: 4px;
+            }
+        }
+
+        /* SweetAlert2 modal responsiveness */
+        .swal2-popup {
+            max-width: 40vw !important;
+            width: 100% !important;
+            box-sizing: border-box;
+            border-radius: 16px !important;
+            padding: 1.5rem 1rem !important;
+        }
+
+        @media (max-width: 600px) {
+            .swal2-popup {
+                max-width: 70vw !important;
+                font-size: 1rem !important;
+                padding: 1rem 0.5rem !important;
+            }
+            .swal2-title {
+                font-size: 1.1rem !important;
+            }
+            .swal2-html-container {
+                font-size: 0.98rem !important;
             }
         }
     </style>
 </head>
 <body>
     <div class="main-content">
+
         <div class="container">
             <div class="header">
                 <h2>

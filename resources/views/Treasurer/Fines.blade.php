@@ -21,6 +21,14 @@
                 <h1><i class="fas fa-gavel"></i> Fines Generation</h1>
             </div>
 
+            <!-- Search and Filter Container -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="studentSearch" placeholder="Search by Student ID or Name...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+
             <div class="table-container">
                 <table>
                     <thead>
@@ -55,50 +63,93 @@
     </div>
 
     <script>
-        // Add interactive functionality
-        document.querySelectorAll('.pay-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if (!this.disabled) {
-                    // Add ripple effect
-                    const ripple = document.createElement('span');
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    ripple.style.width = ripple.style.height = size + 'px';
-                    ripple.style.left = x + 'px';
-                    ripple.style.top = y + 'px';
-                    ripple.style.position = 'absolute';
-                    ripple.style.borderRadius = '50%';
-                    ripple.style.background = 'rgba(255, 255, 255, 0.6)';
-                    ripple.style.transform = 'scale(0)';
-                    ripple.style.animation = 'ripple 0.6s linear';
-                    ripple.style.pointerEvents = 'none';
-                    
-                    this.appendChild(ripple);
-                    
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
-                    
-                    // Here you would typically handle the payment process
-                    console.log('Payment initiated for student:', this.closest('tr').querySelector('.student-name').textContent);
-                }
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    // Get elements
+    const searchInput = document.getElementById('studentSearch');
+    const tableBody = document.querySelector('tbody');
+    const rows = tableBody.getElementsByTagName('tr');
+
+    // Store original rows for reset (only active students)
+    const originalRows = Array.from(rows);
+
+    // Search functionality
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        
+        // Loop through all table rows (only active students)
+        Array.from(originalRows).forEach(row => {
+            const studentId = row.cells[0].textContent.toLowerCase();
+            const studentName = row.cells[1].textContent.toLowerCase();
+            
+            // Check if text matches search
+            const matches = studentId.includes(searchTerm) || 
+                          studentName.includes(searchTerm);
+            
+            // Show/hide row based on match
+            row.style.display = matches ? '' : 'none';
         });
 
-        // Add hover effects to table rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                this.style.background = 'linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(160, 82, 45, 0.05))';
+        // If search is empty, restore all active student rows
+        if (searchTerm === '') {
+            originalRows.forEach(row => {
+                row.style.display = '';
             });
+        }
+
+        // Reattach event listeners after search
+        attachRowEventListeners();
+    });
+
+    // Function to reattach event listeners to visible rows
+    function attachRowEventListeners() {
+        document.querySelectorAll('tbody tr:not([style*="display: none"])').forEach(row => {
+            // Remove existing listeners first
+            row.removeEventListener('mouseenter', handleMouseEnter);
+            row.removeEventListener('mouseleave', handleMouseLeave);
             
-            row.addEventListener('mouseleave', function() {
-                this.style.background = '';
-            });
+            // Add new listeners
+            row.addEventListener('mouseenter', handleMouseEnter);
+            row.addEventListener('mouseleave', handleMouseLeave);
         });
-    </script>
+
+        // Reattach pay button listeners
+        document.querySelectorAll('.pay-btn').forEach(btn => {
+            // Remove existing listener if any
+            btn.removeEventListener('click', handlePayButtonClick);
+            // Add new listener
+            btn.addEventListener('click', handlePayButtonClick);
+        });
+    }
+
+    // Handler functions
+    function handleMouseEnter() {
+        this.style.background = 'linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(160, 82, 45, 0.05))';
+    }
+
+    function handleMouseLeave() {
+        this.style.background = '';
+    }
+
+    function handlePayButtonClick() {
+        if (!this.disabled) {
+            const row = this.closest('tr');
+            const studentId = row.cells[0].textContent;
+            const studentName = row.cells[1].textContent;
+            const remainingBalance = row.cells[4].textContent;
+            
+            // Add your payment logic here
+            console.log('Payment initiated for:', {
+                studentId,
+                studentName,
+                remainingBalance
+            });
+        }
+    }
+
+    // Initial attachment of event listeners
+    attachRowEventListeners();
+});
+</script>
 
     <style>
         @keyframes ripple {
@@ -106,6 +157,37 @@
                 transform: scale(4);
                 opacity: 0;
             }
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 35px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
         }
     </style>
 </body>

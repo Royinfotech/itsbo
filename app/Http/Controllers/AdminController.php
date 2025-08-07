@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Models\Student;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
-use NoCaptcha\Facades\NoCaptcha;
 
 class AdminController extends Controller
 {

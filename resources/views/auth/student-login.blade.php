@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Login - ITSBO</title>
+    <!-- Add CSRF token meta tag -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -123,8 +126,8 @@
 .modal-content {
     background-color: #fdfdfd;
     border-radius: 10px;
-    padding: 10px;
-    width: 75%;
+    padding: 20px;
+    width: 100%;
 }
 
 .modal-header {
@@ -302,6 +305,19 @@
     box-shadow: none;
     transform: none;
 }
+
+/* Forgot Password Link Styling */
+.forgot-password-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.forgot-password-link:hover {
+    color: #4d1515;
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
@@ -368,16 +384,21 @@
         <i class="fas fa-sign-in-alt"></i> Login
     </button>
 </form>
+
+                    <!-- Forgot Password Link - Fixed positioning -->
+                    <div class="text-center mt-3">
+                        <a href="#" class="forgot-password-link">
+                            <i class="fas fa-unlock-alt me-1"></i> Forgot Password?
+                        </a>
+                    </div>
+                    
                     <div class="register-link text-center mt-3">
                         <p class="text-muted">
                             Don't have an account? 
                             <a href="{{ route('register.form') }}" class="text-decoration-none">Register Now</a>
-
-                 <div class="text-center mt-3">
-                 <a href="#" class="forgot-password-link">
-                 <i class="fas fa-unlock-alt me-1"></i> Forgot Password?</a>
+                        </p>
+                    </div>
                  
-</div>
                     <div class="text-center mt-3">
                         <p class="text-muted">
                             By logging in, you agree to our 
@@ -395,10 +416,9 @@
         </div>
     </div>
 
-
 <!-- Terms of Service Modal -->
 <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="termsLabel">Terms of Service</h5>
@@ -428,7 +448,7 @@
 
 <!-- Privacy Policy Modal -->
 <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="privacyLabel">Privacy Policy</h5>
@@ -450,8 +470,11 @@
     </div>
   </div>
 </div>
-    <!-- Scripts -->
+
+    <!-- Load jQuery FIRST, then other scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {!! NoCaptcha::renderJs() !!}
 
          <!-- Loader Overlay -->
@@ -478,8 +501,93 @@
 </div>
     
     <script>
+        // Login form loader
         document.querySelector('.login-form').addEventListener('submit', function() {
             document.getElementById('loaderOverlay').style.display = 'flex';
+        });
+
+        // Forgot Password functionality
+        $(document).ready(function() {
+            console.log('jQuery loaded and ready'); // Debug log
+            
+            $('.forgot-password-link').on('click', function(e) {
+                e.preventDefault();
+                console.log('Forgot password link clicked'); // Debug log
+                
+                Swal.fire({
+                    title: 'Forgot Password?',
+                    text: 'The system will send an automated 8-character password (mixed of Uppercase, Lowercase, Numbers and Symbols) to your registered email address.',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Send Password!',
+                    cancelButtonText: 'Cancel',
+                    input: 'email',
+                    inputPlaceholder: 'Enter your registered email address',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Please enter your email address!';
+                        }
+                        // Basic email validation
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            return 'Please enter a valid email address!';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const email = result.value;
+                        console.log('Email entered:', email); // Debug log
+                        
+                        // Show loading
+                        Swal.fire({
+                            title: 'Sending...',
+                            text: 'Please wait while we send your new password.',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                        
+                        // AJAX request to send new password
+                        $.ajax({
+                            url: '/student/forgot-password',
+                            type: 'POST',
+                            data: {
+                                email: email,
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+                                console.log('Success response:', response); // Debug log
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Password Sent!',
+                                    text: 'A new password has been sent to your email address. Please check your inbox and spam folder.',
+                                    confirmButtonColor: '#28a745'
+                                });
+                            },
+                            error: function(xhr) {
+                                console.log('Error response:', xhr); // Debug log
+                                let errorMessage = 'Something went wrong. Please try again.';
+                                
+                                if (xhr.responseJSON && xhr.responseJSON.message) {
+                                    errorMessage = xhr.responseJSON.message;
+                                }
+                                
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error!',
+                                    text: errorMessage,
+                                    confirmButtonColor: '#dc3545'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 </body>

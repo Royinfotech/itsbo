@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Report - {{ $event->event_name }}</title>
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -13,43 +15,42 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-size: 12px;
-            line-height: 1.4;
-            color: #000;
-            background: white;
+            background: #fff;
+            color: #333;
         }
 
         .container {
+            padding: 30px;
             max-width: 100%;
-            margin: 0;
-            padding: 20px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
-            border-bottom: 2px solid #000;
             padding-bottom: 20px;
+            border-bottom: 3px solid #222;
         }
 
         .header h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .header h2 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 500;
+            color: #555;
         }
 
         .event-details {
+            margin-top: 15px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
             font-size: 11px;
+            color: #444;
         }
 
         .event-details div {
@@ -59,117 +60,129 @@
         .attendance-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
-            font-size: 10px;
+            margin-top: 30px;
+            font-size: 11px;
         }
 
         .attendance-table th,
         .attendance-table td {
-            border: 1px solid #000;
-            padding: 6px 4px;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        .attendance-table th {
-            background-color: #f0f0f0;
-            font-weight: bold;
+            border: 1px solid #ccc;
+            padding: 8px;
             text-align: center;
         }
 
+        .attendance-table th {
+            background-color: #f7f7f7;
+            color: #222;
+            font-weight: 600;
+        }
+
         .attendance-table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #fafafa;
         }
 
         .status-present {
-            color: #008000;
+            color: #2e7d32;
             font-weight: bold;
         }
 
         .status-absent {
-            color: #cc0000;
+            color: #c62828;
             font-weight: bold;
         }
 
-        .na-cell {
-            background-color: #e8e8e8;
-            color: #666;
-            font-style: italic;
+        .status-partial {
+            color: #ef6c00;
+            font-weight: bold;
         }
 
         .summary {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            gap: 20px;
+            margin-top: 40px;
         }
 
         .summary-box {
-            border: 2px solid #000;
-            padding: 15px;
-            width: 48%;
+            flex: 1;
+            border: 1.5px solid #444;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .summary-title {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
-            margin-bottom: 10px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
             text-align: center;
-            border-bottom: 1px solid #000;
-            padding-bottom: 5px;
         }
 
         .summary-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-size: 11px;
         }
 
-        .year-summary {
-            margin-top: 20px;
+        .summary-item strong {
+            font-weight: 600;
         }
 
         .year-breakdown {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .year-item {
+            padding: 6px 10px;
             border: 1px solid #ccc;
-            padding: 8px;
-            min-width: 100px;
-            text-align: center;
+            border-radius: 4px;
+            background-color: #f3f3f3;
             font-size: 10px;
         }
 
-        /* Print-specific styles */
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+            margin-top: 50px;
+            border-top: 1px solid #ccc;
+            padding-top: 12px;
+        }
+
+        /* Print styles */
         @media print {
             body {
                 font-size: 10px;
             }
-            
+
             .container {
                 padding: 10px;
             }
-            
-            .attendance-table {
-                font-size: 8px;
-            }
-            
+
             .attendance-table th,
             .attendance-table td {
-                padding: 3px 2px;
+                padding: 5px;
+                font-size: 9px;
             }
-            
-            /* Ensure table doesn't break across pages */
-            .attendance-table {
-                page-break-inside: avoid;
-            }
-            
-            /* Keep summary together */
+
             .summary {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .summary-box {
                 page-break-inside: avoid;
+            }
+
+            .footer {
+                font-size: 9px;
             }
         }
 
@@ -208,7 +221,7 @@
                 <tr>
                     <th style="width: 5%;">#</th>
                     <th style="width: 30%;">Student Name</th>
-                    <th style="width: 15%;">Student ID</th>
+                    <th style="width: 13%;">Student ID</th>
                     <th style="width: 10%;">Year</th>
                     
                     @php
@@ -218,13 +231,13 @@
                     @endphp
                     
                     @if($showAM)
-                        <th style="width: 15%;">AM In</th>
-                        <th style="width: 15%;">AM Out</th>
+                        <th style="width: 10%;">AM In</th>
+                        <th style="width: 10%;">AM Out</th>
                     @endif
                     
                     @if($showPM)
-                        <th style="width: 15%;">PM In</th>
-                        <th style="width: 15%;">PM Out</th>
+                        <th style="width: 10%;">PM In</th>
+                        <th style="width: 10%;">PM Out</th>
                     @endif
                 </tr>
             </thead>
@@ -238,7 +251,7 @@
                     <tr>
                         <td style="text-align: center;">{{ $index + 1 }}</td>
                         <td>{{ $student->student_name ?? 'N/A' }}</td>
-                        <td>{{ $student->student_id ?? 'N/A' }}</td>
+                        <td style="text-align: center;">{{ $student->student_id ?? 'N/A' }}</td>
                         <td style="text-align: center;">{{ $student->year_level ?? 'N/A' }}</td>
                         
                         @if($showAM)
@@ -253,7 +266,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="{{ $showAM && $showPM ? '8' : '6' }}" style="text-align: center; font-style: italic; color: #666;">
+                        <td colspan="{{ 4 + ($showAM ? 2 : 0) + ($showPM ? 2 : 0) }}" style="text-align: center; font-style: italic; color: #666;">
                             No active students found for this event
                         </td>
                     </tr>
@@ -268,9 +281,10 @@
                 <div class="summary-title">ATTENDANCE SUMMARY</div>
                 
                 @php
-                    // Use the totalActiveStudents passed from controller
-                    $totalStudents = $totalActiveStudents ?? $attendanceData->count();
+                    // Use ONLY the count from the filtered data
+                    $totalStudents = $attendanceData->count();
                     $totalPresent = 0;
+                    $totalPartial = 0;
                     
                     // Count students who actually have attendance records
                     foreach ($attendanceData as $student) {
@@ -280,10 +294,13 @@
                         $hasPMOut = !empty($student->pm_out);
                         
                         $isPresent = false;
+                        $isPartial = false;
                         
                         if ($timeDuration === 'Whole Day') {
-                            // For whole day events, student must have attendance in BOTH AM and PM to be present
-                            $isPresent = (($hasAMIn || $hasAMOut) && ($hasPMIn || $hasPMOut));
+                            $hasAMAttendance = ($hasAMIn || $hasAMOut);
+                            $hasPMAttendance = ($hasPMIn || $hasPMOut);
+                            $isPresent = $hasAMAttendance && $hasPMAttendance;
+                            $isPartial = ($hasAMAttendance || $hasPMAttendance) && !$isPresent;
                         } elseif ($timeDuration === 'Half Day: Morning') {
                             $isPresent = ($hasAMIn || $hasAMOut);
                         } elseif ($timeDuration === 'Half Day: Afternoon') {
@@ -292,10 +309,12 @@
                         
                         if ($isPresent) {
                             $totalPresent++;
+                        } elseif ($isPartial) {
+                            $totalPartial++;
                         }
                     }
                     
-                    $totalAbsent = $totalStudents - $totalPresent;
+                    $totalAbsent = $totalStudents - $totalPresent - $totalPartial;
                     $attendanceRate = $totalStudents > 0 ? round(($totalPresent / $totalStudents) * 100, 1) : 0;
                 @endphp
                 
@@ -307,6 +326,13 @@
                     <span>Present:</span>
                     <strong style="color: #008000;">{{ $totalPresent }}</strong>
                 </div>
+                
+                @if($timeDuration === 'Whole Day' && $totalPartial > 0)
+                <div class="summary-item">
+                    <span>Partial Attendance:</span>
+                    <strong style="color: #ff8800;">{{ $totalPartial }}</strong>
+                </div>
+                @endif
                 
                 <div class="summary-item">
                     <span>Absent:</span>
@@ -337,6 +363,7 @@
                 @php
                     $yearBreakdown = $attendanceData->groupBy('year_level')->map(function($students, $year) use ($timeDuration) {
                         $present = 0;
+                        $partial = 0;
                         $total = $students->count();
                         
                         foreach ($students as $student) {
@@ -346,8 +373,12 @@
                             $hasPMOut = !empty($student->pm_out);
                             
                             if ($timeDuration === 'Whole Day') {
-                                if (($hasAMIn || $hasAMOut) && ($hasPMIn || $hasPMOut)) {
+                                $hasAMAttendance = ($hasAMIn || $hasAMOut);
+                                $hasPMAttendance = ($hasPMIn || $hasPMOut);
+                                if ($hasAMAttendance && $hasPMAttendance) {
                                     $present++;
+                                } elseif ($hasAMAttendance || $hasPMAttendance) {
+                                    $partial++;
                                 }
                             } elseif ($timeDuration === 'Half Day: Morning') {
                                 if ($hasAMIn || $hasAMOut) {
@@ -363,7 +394,8 @@
                         return [
                             'total' => $total,
                             'present' => $present,
-                            'absent' => $total - $present
+                            'partial' => $partial,
+                            'absent' => $total - $present - $partial
                         ];
                     })->sortKeys();
                 @endphp
@@ -374,11 +406,14 @@
                         <span>
                             <strong>{{ $data['present'] }}/{{ $data['total'] }}</strong>
                             ({{ $data['total'] > 0 ? round(($data['present'] / $data['total']) * 100, 1) : 0 }}%)
+                            @if($data['partial'] > 0)
+                                <small style="color: #ff8800;">+{{ $data['partial'] }} partial</small>
+                            @endif
                         </span>
                     </div>
                 @empty
                     <div class="summary-item">
-                        <span colspan="2" style="font-style: italic; color: #666;">No active students found</span>
+                        <span style="font-style: italic; color: #666;">No active students found</span>
                     </div>
                 @endforelse
             </div>

@@ -174,58 +174,46 @@ class SecretaryController extends Controller
         }
     }
 
-    /**
-     * Generate and display printable attendance report
-     * Only includes ACTIVE students
-     */
-    public function printAttendanceReport($eventId)
-    {
-        try {
-            $event = Event::findOrFail($eventId);
-            
-            // Get only ACTIVE students with their attendance records
-            $attendanceData = DB::table('students')
-                ->leftJoin('attendance', function($join) use ($eventId) {
-                    $join->on('students.id', '=', 'attendance.student_id')
-                         ->where('attendance.event_id', '=', $eventId);
-                })
-                ->where('students.status', 'active') // Only active students
-                ->select(
-                    'students.id',
-                    'students.student_id',
-                    'students.student_name',
-                    'students.year_level',
-                    'attendance.am_in',
-                    'attendance.am_out',
-                    'attendance.pm_in',
-                    'attendance.pm_out',
-                    'attendance.created_at as attendance_date'
-                )
-                ->orderBy('students.year_level')
-                ->orderBy('students.student_name')
-                ->get();
+public function printAttendanceReport($eventId)
+{
+    try {
+        $event = Event::findOrFail($eventId);
 
-            // Calculate total active students (this should match the count of records returned)
-            $totalActiveStudents = Student::where('status', 'active')->count();
+        // Get only ACTIVE students with their attendance records for this event
+        $attendanceData = DB::table('students')
+            ->leftJoin('attendance', function($join) use ($eventId) {
+                $join->on('students.id', '=', 'attendance.student_id')
+                     ->where('attendance.event_id', '=', $eventId);
+            })
+            ->where('students.status', '=', 'active') // Only active students
+            ->select([
+                'students.id',
+                'students.student_id', 
+                'students.student_name',
+                'students.year_level',
+                'attendance.am_in',
+                'attendance.am_out', 
+                'attendance.pm_in',
+                'attendance.pm_out',
+                'attendance.created_at as attendance_date'
+            ])
+            ->orderBy('students.year_level')
+            ->orderBy('students.student_name')
+            ->get();
 
-            Log::info('Generating attendance report', [
-                'event_id' => $eventId,
-                'event_name' => $event->event_name,
-                'total_active_students' => $totalActiveStudents,
-                'attendance_records' => $attendanceData->count(),
-                'first_few_records' => $attendanceData->take(3)->toArray()
-            ]);
+        $totalActiveStudents = $attendanceData->count();
 
-            return view('attendance.print-report', compact('event', 'attendanceData', 'totalActiveStudents'));
-            
-        } catch (\Exception $e) {
-            Log::error('Error generating attendance report: ' . $e->getMessage());
-            return back()->with('error', 'Failed to generate attendance report: ' . $e->getMessage());
-        }
+        return view('attendance.print-report', compact('event', 'attendanceData', 'totalActiveStudents'));
+
+    } catch (\Exception $e) {
+        Log::error('Error generating attendance report: ' . $e->getMessage(), [
+            'event_id' => $eventId,
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        return back()->with('error', 'Failed to generate attendance report: ' . $e->getMessage());
     }
-
-
-
+}
     // List students pending approval
     public function pendingStudents()
 {

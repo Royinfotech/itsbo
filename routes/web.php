@@ -12,12 +12,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\TreasurerController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\QRController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\FileController;
 use App\Http\Controllers\AttendanceQRController;
-use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Auth\StudentLoginController;
 use App\Http\Controllers\DashboardTreasurerController;
 use App\Http\Controllers\PaymentTransactionReportController;
@@ -76,54 +73,41 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/print-attendance-report', [AttendanceQRController::class, 'printAttendanceReport']);
     Route::get('/get-attendance-logs', [AttendanceQRController::class, 'getAttendanceLogs']);
 
-Route::get('/pages/attendance-qr', [AttendanceQRController::class, 'index'])->name('secretary.attendanceqr');
-
-
-// Secretary Dashboard Routes
+    Route::get('/pages/attendance-qr', [AttendanceQRController::class, 'index'])->name('secretary.attendanceqr');
 
     Route::get('/secretary/dashboard/events', [SecretaryDashboardController::class, 'getEvents']);
     Route::get('/secretary/dashboard/student-count', [SecretaryDashboardController::class, 'getStudentCount']);
-    Route::get('/secretary/dashboard/file-count', [SecretaryDashboardController::class, 'getFileCount']);
+    Route::get('/events', [EventController::class, 'index']);
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events/check-conflict', [EventController::class, 'checkConflict']);
+    Route::get('/events/check-duplicate', [EventController::class, 'checkDuplicate']);
+    Route::post('/events/update', [EventController::class, 'update']);
+    Route::get('/event/{id}', [EventController::class, 'getEventDetails'])->name('event.details');
 
-
-Route::get('/events', [EventController::class, 'index']);
-Route::post('/events', [EventController::class, 'store'])->name('events.store');
-Route::get('/events/check-conflict', [EventController::class, 'checkConflict']);
-Route::get('/events/check-duplicate', [EventController::class, 'checkDuplicate']);
-Route::post('/events/update', [EventController::class, 'update']);
-Route::get('/event/{id}', [EventController::class, 'getEventDetails'])->name('event.details');
-
-// Make sure this route is within your web middleware group
-Route::middleware(['web'])->group(function () {
+    Route::middleware(['web'])->group(function () {
     Route::post('/save-attendance', [AttendanceQRController::class, 'saveAttendance'])->name('attendance.save');
-});
+    });
 
+    Route::get('/org-structure', [OrgController::class, 'index'])->name('org.structure');
 
-Route::get('/org-structure', [OrgController::class, 'index'])->name('org.structure');
-
-
-// Secretary Dashboard & Main Views
-Route::get('/secretary', [SecretaryController::class, 'secretary'])->name('secretary.dashboard');
-Route::get('/pages/event', [SecretaryController::class, 'events'])->name('secretary.event');
-Route::get('/pages/files', [SecretaryController::class, 'files'])->name('secretary.files');
-Route::get('/pages/orgstruct', [SecretaryController::class, 'orgstruct'])->name('secretary.orgstruct');
-Route::get('/pages/approvestudents', [App\Http\Controllers\SecretaryController::class, 'pendingStudents'])->name('secretary.approvestudents');
-Route::get('/pages/officers', function () { return view('Secretary.OfficerRegistration'); })->name('secretary.officers');
-Route::get('/pages/secdashboard', action: [SecretaryDashboardController::class, 'index'])->name('secretary.dashboard');
-Route::get('/pages/officers', [OfficerController::class, 'index'])->name('secretary.officers');
-Route::get('/pages/officers', [OfficerController::class, 'index'])->name('officers.index');
-Route::post('/pages/officers', [OfficerController::class, 'store'])->name('officers.store');
-Route::put('/pages/officers/{id}', [OfficerController::class, 'update'])->name('officers.update');
+    Route::get('/secretary', [SecretaryController::class, 'secretary'])->name('secretary.dashboard');
+    Route::get('/pages/event', [SecretaryController::class, 'events'])->name('secretary.event');
+    Route::get('/pages/files', [SecretaryController::class, 'files'])->name('secretary.files');
+    Route::get('/pages/orgstruct', [SecretaryController::class, 'orgstruct'])->name('secretary.orgstruct');
+    Route::get('/pages/approvestudents', [App\Http\Controllers\SecretaryController::class, 'pendingStudents'])->name('secretary.approvestudents');
+    Route::get('/pages/officers', function () { return view('Secretary.OfficerRegistration'); })->name('secretary.officers');
+    Route::get('/pages/secdashboard', action: [SecretaryDashboardController::class, 'index'])->name('secretary.dashboard');
+    Route::get('/pages/officers', [OfficerController::class, 'index'])->name('secretary.officers');
+    Route::get('/pages/officers', [OfficerController::class, 'index'])->name('officers.index');
+    Route::post('/pages/officers', [OfficerController::class, 'store'])->name('officers.store');
+    Route::put('/pages/officers/{id}', [OfficerController::class, 'update'])->name('officers.update');
 
     Route::post('/scan', [AttendanceQRController::class, 'scanQr'])->name('attendance.scan');
     Route::post('/open-scan-type', [AttendanceQRController::class, 'openScanType'])->name('attendance.open-scan-type');
     Route::post('/close-scan-type', [AttendanceQRController::class, 'closeScanType'])->name('attendance.close-scan-type');
     Route::get('/open-scan-type', [AttendanceQRController::class, 'getOpenScanType'])->name('attendance.get-open-scan-type');
     Route::post('/finish-event', [AttendanceQRController::class, 'finishEvent'])->name('attendance.finish-event');
-// File Management
-Route::post('/secretary/upload-file', [SecretaryController::class, 'uploadFile'])->name('secretary.uploadFile');
-Route::get('/secretary/download-file/{id}', [SecretaryController::class, 'downloadFile'])->name('secretary.downloadFile');
-Route::get('/secretary/get-files', [SecretaryController::class, 'getFiles'])->name('secretary.getFiles');
+
 Route::get('/secretary/attendance/print/{event}', [SecretaryController::class, 'printAttendanceReport'])->name('secretary.printAttendanceReport');
 
 // Event Management
@@ -132,7 +116,6 @@ Route::get('/secretary/get-events', [SecretaryController::class, 'getEvents'])->
 Route::get('/secretary/get-event/{id}', [SecretaryController::class, 'getEvent'])->name('secretary.getEvent');
 
 Route::get('/get-student-count', [SecretaryDashboardController::class, 'getStudentCount']);
-Route::get('/get-file-count', [SecretaryDashboardController::class, 'getFileCount']);
 Route::get('/get-events', [SecretaryDashboardController::class, 'getEvents']);
 // Student Approval Routes
 Route::post('/secretary/approve-student/{id}', [SecretaryController::class, 'approveStudent'])->name('secretary.approve.student')->middleware('web');
@@ -195,10 +178,8 @@ Route::get('/attendance/open-scan-type', [AttendanceQRController::class, 'getOpe
 Route::get('/treasurer/orgstruct', [TreasurerController::class, 'orgstruct'])->name('treasurer.orgstruct');
 Route::post('/attendance/finish-event', [AttendanceQRController::class, 'finishEvent'])->name('attendance.finishEvent');
 
-Route::middleware(['auth'])->group(function () {
     Route::get('/pages/attendance-qr', [AttendanceQRController::class, 'index'])->name('attendance.qr');
     Route::get('/api/events', [AttendanceQRController::class, 'getEvents'])->name('events.list');
-});
 
 // Student Auth Routes
 Route::get('/student/login', [StudentLoginController::class, 'showStudentLogin'])->name('student.login');
@@ -211,10 +192,13 @@ Route::prefix('student')->group(function () {
     Route::get('/announcement', [StudentController::class, 'announcement'])->name('student.announcement');
     Route::get('/attendance/{student_id}', [StudentController::class, 'getAttendanceRecord'])->name('student.attendance');
     Route::get('/qrcode', [StudentController::class, 'qrcode'])->name('student.qrcode');
-    Route::get('/profile/{student_id}', [StudentController::class, 'profile'])->name('student.profile');
-    Route::post('/students/{id}/update-photo', [StudentController::class, 'updatePhoto'])->name('student.update.photo');
     Route::get('/orgstruct', [StudentController::class, 'orgstruct'])->name('student.orgstruct');
+
 });
+Route::post('/student/change-password/{student_id}', [StudentController::class, 'changePassword'])->name('student.change.password');
+Route::get('/student/profile/{student_id}', [StudentController::class, 'profile'])->name('student.profile');
+Route::post('/student/profile/update-photo/{student_id}', [StudentController::class, 'updatePhoto'])->name('student.update.photo');
+Route::get('/student/accounts/{student_id}', [StudentController::class, 'accounts'])->name('student.accounts');
 
 Route::prefix('student')->group(function () {
     Route::get('qrcode/{student_id}', [StudentController::class, 'qrcode'])->name('student.qrcode');
@@ -255,3 +239,9 @@ Route::get('/attendance/print', [AttendanceQRController::class, 'printReport'])-
 
 Route::get('/payment-transactions', [PaymentTransactionReportController::class, 'index'])->name('payment-transactions');
 Route::get('/reports/payment-transactions', [PaymentTransactionReportController::class, 'index'])->name('reports.payment-transactions');
+
+use App\Http\Controllers\Student\StudentForgotPasswordController;
+
+// Student Forgot Password Route
+Route::post('/student/forgot-password', [StudentForgotPasswordController::class, 'sendNewPassword'])
+    ->name('student.forgot.password');

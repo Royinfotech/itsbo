@@ -599,7 +599,8 @@ document.addEventListener('DOMContentLoaded', function() {
             html: message,
             confirmButtonColor: '#800000',
             allowOutsideClick: false,
-            showConfirmButton: true
+            timer: 2000,
+            timerProgressBar: true
         }).then(() => {
             alertShowing = false;
         });

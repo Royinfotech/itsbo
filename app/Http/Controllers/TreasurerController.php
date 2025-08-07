@@ -112,7 +112,8 @@ public function getStudentPayments($id)
 
 public function showFines()
 {
-    $students = Student::where('status', 'Active')->get();
+    // Get only active students
+    $students = Student::where('status', 'active')->get();
     $events = Event::currentSchoolYear()->get();
 
     $finesData = [];
@@ -144,15 +145,17 @@ public function showFines()
             }
         }
 
-        // Replace this with your actual payment logic if needed
-        $lessPayment = 0;
-
-        $finesData[] = [
-            'student' => $student,
-            'total_fines' => $totalFines,
-            'less_payment' => $lessPayment,
-            'remaining_balance' => $totalFines - $lessPayment,
-        ];
+        // Include only active students in the fines data
+        if ($student->status === 'active') {
+            $lessPayment = 0; // Replace with actual payment logic if needed
+            
+            $finesData[] = [
+                'student' => $student,
+                'total_fines' => $totalFines,
+                'less_payment' => $lessPayment,
+                'remaining_balance' => $totalFines - $lessPayment,
+            ];
+        }
     }
 
     return view('Treasurer.Fines', compact('finesData'));

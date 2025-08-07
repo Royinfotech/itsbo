@@ -26,9 +26,6 @@ use App\Models\Attendance;
 
 class StudentController extends Controller
 {
-
-
-    
     public function profile($student_id)
     {
         try {
@@ -41,6 +38,70 @@ class StudentController extends Controller
             ]);
             return response()->view('Student.error', [
                 'message' => 'Failed to load profile'
+            ], 500);
+        }
+    }
+
+    public function updatePhoto(Request $request, $student_id) 
+    {
+        try {
+            // Add debug logging
+            Log::info('Photo update attempt', ['student_id' => $student_id]);
+            
+            // Validate the request
+            $validator = Validator::make($request->all(), [
+                'photo' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'error' => $validator->errors()->first()
+                ], 422);
+            }
+
+            // Find the student
+            $student = Student::where('student_id', $student_id)->firstOrFail();
+
+            // Delete old photo if exists
+            if ($student->photo && Storage::disk('public')->exists($student->photo)) {
+                Storage::disk('public')->delete($student->photo);
+                Log::info('Old photo deleted', ['old_photo' => $student->photo]);
+            }
+
+            // Store new photo
+            $path = $request->file('photo')->store('photos', 'public');
+            
+            // Update student record
+            $student->update(['photo' => $path]);
+
+            Log::info('Photo updated successfully', [
+                'student_id' => $student_id,
+                'new_path' => $path
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Photo updated successfully',
+                'photo_url' => asset('storage/' . $path)
+            ]);
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            Log::error('Student not found:', ['student_id' => $student_id]);
+            return response()->json([
+                'success' => false,
+                'error' => 'Student not found'
+            ], 404);
+        } catch (\Exception $e) {
+            Log::error('Photo update error:', [
+                'student_id' => $student_id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'error' => 'Failed to update photo. Please try again.'
             ], 500);
         }
     }
@@ -108,7 +169,6 @@ class StudentController extends Controller
         }
     }
 
-
     public function dashboard($student_id)
     {
         try {
@@ -143,6 +203,7 @@ class StudentController extends Controller
                 ->withErrors(['error' => 'Error loading dashboard']);
         }
     }
+
     public function studentLogout(Request $request)
     {
         // Clear student session data
@@ -155,6 +216,44 @@ class StudentController extends Controller
         return redirect()->route('student.login')
             ->with('message', 'Logged out successfully');
     }
+
+    public function changePassword(Request $request, $student_id)
+{
+    try {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|same:new_password'
+        ]);
+
+        $student = Student::where('student_id', $student_id)->firstOrFail();
+
+        // Check if current password is correct
+        if (!Hash::check($request->current_password, $student->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Current password is incorrect'
+            ], 400);
+        }
+
+        // Update password
+        $student->password = Hash::make($request->new_password);
+        $student->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password updated successfully'
+        ]);
+
+    } catch (\Exception $e) {
+        \Log::error('Password change error: ' . $e->getMessage());
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while changing password'
+        ], 500);
+    }
+}
+
     public function announcement()
     {
         try {
@@ -173,111 +272,144 @@ class StudentController extends Controller
             return response()->json(['error' => 'Failed to load announcements'], 500);
         }
     }
-    public function updatePhoto(Request $request, $id)
-{
-    $request->validate([
-        'photo' => 'required|image|mimes:jpg,jpeg,png|max:10048',
-    ]);
 
-    $student = Student::findOrFail($id);
+    public function getAttendanceRecord($student_id)
+    {
+        try {
+            Log::info('Fetching attendance records for student:', ['student_id' => $student_id]);
 
-    if ($student->photo) {
-        Storage::delete($student->photo);
+            // Verify student exists
+            $student = Student::where('student_id', $student_id)->firstOrFail();
+
+            // Get attendance records with event details
+            $attendances = Attendance::with(['event' => function($query) {
+                $query->select('event_id', 'event_name', 'event_date', 'time_duration');
+            }])
+            ->where('student_id', $student_id)
+            ->orderBy('attendance_date', 'desc')
+            ->get();
+
+            Log::info('Retrieved attendance records:', [
+                'count' => $attendances->count(),
+                'student_name' => $student->student_name
+            ]);
+
+            // Calculate attendance statistics
+            $stats = [
+                'total' => $attendances->count(),
+                'present' => $attendances->filter(function($attendance) {
+                    return ($attendance->am_in && $attendance->pm_in);
+                })->count(),
+                'halfday' => $attendances->filter(function($attendance) {
+                    return ($attendance->am_in xor $attendance->pm_in);
+                })->count(),
+                'absent' => $attendances->filter(function($attendance) {
+                    return (!$attendance->am_in && !$attendance->pm_in);
+                })->count()
+            ];
+
+            return view('Student.attendancerecord', [
+                'student' => $student,
+                'attendances' => $attendances,
+                'stats' => $stats,
+                'success' => true
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch attendance record:', [
+                'student_id' => $student_id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->view('Student.attendancerecord', [
+                'attendances' => collect(),
+                'error' => 'Failed to load attendance records. Please try again later.',
+                'success' => false
+            ], 500);
+        }
     }
 
-    $path = $request->file('photo')->store('photos');
+    public function orgstruct()
+    {
+        try {
+            $currentSchoolYear = \App\Models\SchoolYear::where('is_open', true)->first();
+            $positions = $currentSchoolYear ? $currentSchoolYear->open_positions : [];
+            
+            $officers = [];
+            if ($currentSchoolYear) {
+                foreach ($positions as $position) {
+                    $positionKey = strtolower(str_replace(' ', '', $position));
+                    $officers[$positionKey] = Officer::where('position', $position)
+                        ->where('school_year_id', $currentSchoolYear->id)
+                        ->first();
+                }
+            }
 
-    $student->update(['photo' => $path]);
+            return view('Student.OrgStruct', [
+                'positions' => $positions,
+                'officers' => $officers,
+                'currentSchoolYear' => $currentSchoolYear
+            ]);
 
-    return response()->json(['success' => true]);
-}
+        } catch (\Exception $e) {
+            Log::error('Error in SuperAdmin orgstruct:', ['error' => $e->getMessage()]);
+            return view('Student.OrgStruct', [
+                'positions' => [],
+                'officers' => [],
+                'error' => 'Failed to load organizational structure'
+            ]);
+        }
+    }
 
-
-public function getAttendanceRecord($student_id)
-{
-    try {
-        Log::info('Fetching attendance records for student:', ['student_id' => $student_id]);
-
-        // Verify student exists
+    public function accounts($student_id)
+    {
         $student = Student::where('student_id', $student_id)->firstOrFail();
 
-        // Get attendance records with event details
-        $attendances = Attendance::with(['event' => function($query) {
-            $query->select('event_id', 'event_name', 'event_date', 'time_duration');
-        }])
-        ->where('student_id', $student_id)
-        ->orderBy('attendance_date', 'desc')
-        ->get();
+        // Get active school year
+        $activeSchoolYear = \App\Models\SchoolYear::where('is_open', true)->first();
 
-        Log::info('Retrieved attendance records:', [
-            'count' => $attendances->count(),
-            'student_name' => $student->student_name
-        ]);
+        // Payments for active school year
+        $payments = \App\Models\Payment::where('student_id', $student->id)
+            ->where('school_year_id', $activeSchoolYear->id)
+            ->orderBy('payment_date', 'desc')
+            ->get();
 
-        // Calculate attendance statistics
-        $stats = [
-            'total' => $attendances->count(),
-            'present' => $attendances->filter(function($attendance) {
-                return ($attendance->am_in && $attendance->pm_in);
-            })->count(),
-            'halfday' => $attendances->filter(function($attendance) {
-                return ($attendance->am_in xor $attendance->pm_in);
-            })->count(),
-            'absent' => $attendances->filter(function($attendance) {
-                return (!$attendance->am_in && !$attendance->pm_in);
-            })->count()
-        ];
+        // Payment types for active school year
+        $paymentFors = \App\Models\PaymentFor::where('school_year_id', $activeSchoolYear->id)->get();
 
-        return view('Student.attendancerecord', [
-            'student' => $student,
-            'attendances' => $attendances,
-            'stats' => $stats,
-            'success' => true
-        ]);
+        // Calculate total payable and paid for active school year
+        $totalPayable = $paymentFors->sum('amount');
+        $totalPaid = $payments->sum('amount');
 
-    } catch (\Exception $e) {
-        Log::error('Failed to fetch attendance record:', [
-            'student_id' => $student_id,
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString()
-        ]);
-
-        return response()->view('Student.attendancerecord', [
-            'attendances' => collect(),
-            'error' => 'Failed to load attendance records. Please try again later.',
-            'success' => false
-        ], 500);
-    }
-}
-    public function orgstruct()
-{
-    try {
-        $currentSchoolYear = \App\Models\SchoolYear::where('is_open', true)->first();
-        $positions = $currentSchoolYear ? $currentSchoolYear->open_positions : [];
-        
-        $officers = [];
-        if ($currentSchoolYear) {
-            foreach ($positions as $position) {
-                $positionKey = strtolower(str_replace(' ', '', $position));
-                $officers[$positionKey] = Officer::where('position', $position)
-                    ->where('school_year_id', $currentSchoolYear->id)
-                    ->first();
+        // Back accounts: unpaid payment_fors from previous school years
+        $previousYears = \App\Models\SchoolYear::where('id', '<', $activeSchoolYear->id)->pluck('id');
+        $backAccounts = [];
+        foreach ($previousYears as $syId) {
+            $prevPaymentFors = \App\Models\PaymentFor::where('school_year_id', $syId)->get();
+            foreach ($prevPaymentFors as $pf) {
+                $paid = \App\Models\Payment::where('student_id', $student->id)
+                    ->where('payment_for_id', $pf->id)
+                    ->where('school_year_id', $syId)
+                    ->sum('amount');
+                if ($paid < $pf->amount) {
+                    $backAccounts[] = [
+                        'school_year' => \App\Models\SchoolYear::find($syId)->year,
+                        'payment_for' => $pf->name,
+                        'amount_due' => $pf->amount - $paid,
+                    ];
+                }
             }
         }
 
-        return view('Student.OrgStruct', [
-            'positions' => $positions,
-            'officers' => $officers,
-            'currentSchoolYear' => $currentSchoolYear
-        ]);
-
-    } catch (\Exception $e) {
-        Log::error('Error in SuperAdmin orgstruct:', ['error' => $e->getMessage()]);
-        return view('Student.OrgStruct', [
-            'positions' => [],
-            'officers' => [],
-            'error' => 'Failed to load organizational structure'
-        ]);
+        return view('Student.accounts', compact(
+            'student',
+            'payments',
+            'paymentFors',
+            'totalPayable',
+            'totalPaid',
+            'backAccounts',
+            'activeSchoolYear'
+        ));
     }
-}
 }

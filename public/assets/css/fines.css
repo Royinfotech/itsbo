@@ -1,4 +1,4 @@
-        * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -273,6 +273,85 @@
         .empty-state p {
             font-size: 1rem;
             color: #888;
+        }
+
+        /* Search and Sorting */
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 35px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        .year-level {
+            text-align: center;
+            font-weight: 500;
+            color: #800000;
+            background-color: rgba(128, 0, 0, 0.05);
+            border-radius: 4px;
+            padding: 4px 8px;
+        }
+
+        /* Update the existing table styles to accommodate the new column */
+        .table-container table {
+            min-width: 1000px; /* Increase minimum width to accommodate new column */
+        }
+
+        .year-level-sorting {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .year-level-sorting label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .year-level-sorting select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        .year-level-sorting button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            background: #800000;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .year-level-sorting button:hover {
+            background: #600000;
         }
 
         /* Responsive Design */
